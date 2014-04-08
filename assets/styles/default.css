@@ -1,0 +1,40 @@
+.infowindow-header {
+  background-color: #ff4900;
+  border: solid 1px #a62f00;
+  width: 1024px;
+  height: 20px;
+  font-weight: bold;
+  padding: 0px 4px 0px 4px;
+  float: right;
+  position: relative;
+  right: 500px;
+  z-index: 2;
+  }
+.infowindow {
+  background-color: #ff5e00;
+  border: solid 1px #a62f00;
+  border-top: none;
+  width: 1024px;
+  height: 770px;
+  padding: 4px;
+  clear: right;
+  float: right;
+  position: relative;
+  right: 500px;
+  z-index: 2;
+  }
+#browser {
+  display: none;
+}
+
+#brlink:hover  {
+  cursor: pointer;
+}
+#brclose:hover {
+  color: #ffffff;
+  cursor: pointer;
+}
+#brclose {
+  display: block;
+  float: right;
+}
