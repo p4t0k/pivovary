@@ -39,13 +39,13 @@
 
   </head>
 
-  <body onclick="">
+  <body>
 
 <div id="browser">
 <div class="infowindow-header">
 <span>Prohlížeč</span>
 <span id="brclose" onclick="javascript: $('#browser').hide()">×</span>
-<div class"clearfix"></div>
+<div class="clearfix"></div>
 </div>
 <div class="infowindow">
 <iframe id="webframe" width="1024" height="768">
@@ -54,7 +54,7 @@
 </div>
 </div>
     <!-- Include the view file for the current controller/route -->
-    <div id="mapdiv" style="width: 1600px; background-color:#EEEEEE; height: 1000px; z-index:-1;" ></div>
+    <div id="mapdiv" style="width: 1900px; background-color:#8fab67; height: 1060px; z-index:-1;" ></div>
 <div>
   </ul>
 </div>
@@ -98,30 +98,50 @@ $(document).click(function() {
 });
 */
                 
-	    
 		var map;
 		
 		AmCharts.ready(function() {
 		    map = new AmCharts.AmMap();
+                    //map.imagesSettings = { rollOverColor: "#089282", rollOverScale: 3, selectedScale: 3, selectedColor: "#089282", color:"#13564e" };
+                    //map.imagesSettings = { rollOverScale: 3, selectedScale: 3, scale: 1 };
 		    map.pathToImages = "/images/";
                     // legenda 
+                    //map.addLabel(100, 30, "Průmyslové pivovary/Industrial Breweries", "left", "14", "#000000", 0, false, true)
                     var legend = new AmCharts.AmLegend();
-                    legend.data = [{title:"Průmyslové pivovary/Industrial Breweries", color:"#CC0000"}, {title:"Minipivovary/Microbreweries", color:"#00CC00"}, {title:"Vybraná města", color:"#000000"}]
-                    legend.left = 400;
-                    legend.bottom = 5;
+                    legend.data = [{title:"Průmyslové pivovary/Industrial Breweries", markerType: "none"}, {title:"Minipivovary/Microbreweries", color:"#666666", markerType: "circle"}, {title:"Vybraná města", color:"#ffff5e", markerType: "circle"}]
+                    legend.left = 600;
+                    legend.bottom = 0;
                     map.addLegend(legend);
 		    //map.panEventsEnabled = true; // this line enables pinch-zooming and dragging on touch devices
 		    
-                    //map.addLabel('1000px','1000px', 'test test test', 'center', '10px', '#000000'),
                     map.addTitle('Mapa pivovarů a minipivovarů v ČR', '#000000', true, true);
 		    map.balloon.color = "#000000";
 		
 		    var dataProvider = {
 			mapVar: AmCharts.maps.czechRepublicHigh,
 			getAreasFromMap:true,
-                        images:[
+                        //{left: "600", bottom: "30", type: "circle", scale: "1.5"}, {left: "700", bottom: "30", type: "circle", scale: "1.5"},
+                        images:[ 
+                    // obrazek u legendy (prum. pivovary)
+                    {left: "608", bottom: "19", color: "#535353", svgPath: "M9,0C4.029,0,0,4.029,0,9s4.029,9,9,9s9-4.029,9-9S13.971,0,9,0z M9,15.93 c-3.83,0-6.93-3.1-6.93-6.93S5.17,2.07,9,2.07s6.93,3.1,6.93,6.93S12.83,15.93,9,15.93 M12.5,9c0,1.933-1.567,3.5-3.5,3.5S5.5,10.933,5.5,9S7.067,5.5,9,5.5 S12.5,7.067,12.5,9z", scale: "1"}, 
+                    // vybrana mesta
+                    {latitude: "48.9775383" , longitude: "14.4822294" , title: "České Budějovice" , color: "#ffff5e", type: "circle", scale: "5", label: "České Budějovice", labelColor: "#4d4d4d", selectable: false, mouseEnabled: false, labelFontSize: "15"},
+                    {latitude: "49.7403111" , longitude: "13.3860278" , title: "Plzeň" , color: "#ffff5e", type: "circle", scale: "5", label: "Plzeň", labelColor: "#4d4d4d", selectable: false, mouseEnabled: false, labelFontSize: "15"},
+                    {latitude: "50.2381614" , longitude: "12.8709133" , title: "Karlovy Vary" , color: "#ffff5e", type: "circle", scale: "5", label: "Karlovy Vary", labelColor: "#4d4d4d", selectable: false, mouseEnabled: false, labelFontSize: "15"},
+                    {latitude: "50.6612314" , longitude: "14.0614083" , title: "Ústí nad Labem" , color: "#ffff5e", type: "circle", scale: "5", label: "Ústí nad Labem", labelColor: "#4d4d4d", selectable: false, mouseEnabled: false, labelFontSize: "15"},
+                    {latitude: "50.7674661" , longitude: "15.0510494" , title: "Liberec" , color: "#ffff5e", type: "circle", scale: "5", label: "Liberec", labelColor: "#4d4d4d", selectable: false, mouseEnabled: false, labelFontSize: "15"},
+                    {latitude: "50.2102181" , longitude: "15.8328097" , title: "Hradec Králové" , color: "#ffff5e", type: "circle", scale: "5", label: "Hradec Králové", labelColor: "#4d4d4d", selectable: false, mouseEnabled: false, labelFontSize: "15"},
+                    {latitude: "50.0353561" , longitude: "15.7730319" , title: "Pardubice" , color: "#ffff5e", type: "circle", scale: "5", label: "Pardubice", labelColor: "#4d4d4d", selectable: false, mouseEnabled: false, labelFontSize: "15"},
+                    {latitude: "49.4033553" , longitude: "15.5903800" , title: "Jihlava" , color: "#ffff5e", type: "circle", scale: "5", label: "Jihlava", labelColor: "#4d4d4d", selectable: false, mouseEnabled: false, labelFontSize: "15"},
+                    {latitude: "49.1991475" , longitude: "16.6138572" , title: "Brno" , color: "#ffff5e", type: "circle", scale: "5", label: "Brno", labelColor: "#4d4d4d", selectable: false, mouseEnabled: false, labelFontSize: "15"},
+                    {latitude: "49.5916581" , longitude: "17.2579994" , title: "Olomouc" , color: "#ffff5e", type: "circle", scale: "5", label: "Olomouc", labelColor: "#4d4d4d", selectable: false, mouseEnabled: false, labelFontSize: "15"},
+                    {latitude: "49.2283328" , longitude: "17.6644778" , title: "Zlín" , color: "#ffff5e", type: "circle", scale: "5", label: "Zlín", labelColor: "#4d4d4d", selectable: false, mouseEnabled: false, labelFontSize: "15"},
+                    {latitude: "49.8357903" , longitude: "18.2803597" , title: "Ostrava" , color: "#ffff5e", type: "circle", scale: "5", label: "Ostrava", labelColor: "#4d4d4d", selectable: false, mouseEnabled: false, labelFontSize: "15"},
+                    {latitude: "50.0794328" , longitude: "14.4337844" , title: "Praha" , color: "#ffff5e", type: "circle", scale: "5", label: "Praha", labelColor: "#4d4d4d", selectable: false, mouseEnabled: false, labelFontSize: "15"}, 
+
 		    <% _.each(pivovary, function (pivovar) { %>
-                        {latitude:"<%= pivovar.Sirka2 %>", longitude:"<%= pivovar.Delka2 %>", type:"circle", color:"#6c00ff", title:"<%=  pivovar.Pivovar %>", url: "#test", description:"<strong>Kraj:</strong> <%=  pivovar.Kraj %><br /><strong>Město:</strong> <%=  pivovar.Mesto %><br /><strong>Adresa:</strong> <%=  pivovar.Adresa %><br /><strong>GPS:</strong> <%= pivovar.Sirka %> <%= pivovar.Delka %> <br /><strong>Status:</strong> <%=  pivovar.Status %><br /><strong>Založen:</strong> <%=  pivovar.Zalozen %><br /><strong>WWW:</strong> <a id=\"brlink\" onclick=\"javascript:$('#browser').show();$('#webframe').attr('src', 'http://<%=  pivovar.Web %>')\"><%=  pivovar.Web %></a>"},
+                        {latitude:"<%= pivovar.Sirka2 %>", longitude:"<%= pivovar.Delka2 %>", rollOverScale: "3", selectedScale: "3", scale: "1.5", <%if (pivovar.Status != 'Minipivovar') { %> svgPath: "M9,0C4.029,0,0,4.029,0,9s4.029,9,9,9s9-4.029,9-9S13.971,0,9,0z M9,15.93 c-3.83,0-6.93-3.1-6.93-6.93S5.17,2.07,9,2.07s6.93,3.1,6.93,6.93S12.83,15.93,9,15.93 M12.5,9c0,1.933-1.567,3.5-3.5,3.5S5.5,10.933,5.5,9S7.067,5.5,9,5.5 S12.5,7.067,12.5,9z", color:"#535353",<% } else { %> type:"circle", color:"#666666", <% } %> title:"<%=  pivovar.Pivovar %>", url: "#"+"<%=  pivovar.Pivovar %>", description:"<strong>Kraj:</strong> <%=  pivovar.Kraj %><br /><strong>Město:</strong> <%=  pivovar.Mesto %><br /><strong>Adresa:</strong> <%=  pivovar.Adresa %><br /><strong>GPS:</strong> <%= pivovar.Sirka %> <%= pivovar.Delka %> <br /><strong>Status:</strong> <%=  pivovar.Status %><br /><strong>Založen:</strong> <%=  pivovar.Zalozen %><br /><strong>WWW:</strong> <%=  pivovar.Web %>"},
+                        //{latitude:"<%= pivovar.Sirka2 %>", longitude:"<%= pivovar.Delka2 %>", rollOverScale: "3", selectedScale: "3", scale: "1", <%if (pivovar.Status != 'Minipivovar') { %> svgPath: "M9,0C4.029,0,0,4.029,0,9s4.029,9,9,9s9-4.029,9-9S13.971,0,9,0z M9,15.93 c-3.83,0-6.93-3.1-6.93-6.93S5.17,2.07,9,2.07s6.93,3.1,6.93,6.93S12.83,15.93,9,15.93 M12.5,9c0,1.933-1.567,3.5-3.5,3.5S5.5,10.933,5.5,9S7.067,5.5,9,5.5 S12.5,7.067,12.5,9z", color:"#535353",<% } else { %> type:"circle", color:"#666666", <% } %> title:"<%=  pivovar.Pivovar %>", url: "#"+"<%=  pivovar.Pivovar %>", description:"<strong>Kraj:</strong> <%=  pivovar.Kraj %><br /><strong>Město:</strong> <%=  pivovar.Mesto %><br /><strong>Adresa:</strong> <%=  pivovar.Adresa %><br /><strong>GPS:</strong> <%= pivovar.Sirka %> <%= pivovar.Delka %> <br /><strong>Status:</strong> <%=  pivovar.Status %><br /><strong>Založen:</strong> <%=  pivovar.Zalozen %><br /><strong>WWW:</strong> <a id=\"brlink\" onclick=\"javascript:$('#browser').show();$('#webframe').attr('src', 'http://<%=  pivovar.Web %>')\"><%=  pivovar.Web %></a>"},
 		    <% }) %> ]
 		    };
 		
@@ -129,7 +149,7 @@ $(document).click(function() {
 		
 		    map.areasSettings = {
 			autoZoom: true,
-			selectedColor: "#CC0000" // cervena
+			selectedColor: "#f6ff86" // svetlejsi zluta
 		    };
 		
 		    map.smallMap = new AmCharts.SmallMap();

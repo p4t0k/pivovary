@@ -1,0 +1,180 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <!--
+        For demonstration purposes, the `title` is dynamically set here based on
+        your `sails.config.appName` to show that you can inject data into layouts
+        exactly the same way as with your other view templates.
+    -->
+    <title>Pivovary v ČR</title>
+
+    <!-- Viewport mobile tag for sensible mobile support -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+    <!--
+
+      Stylesheets
+      ========================
+
+      You can link any CSS, LESS, or image files in your `assets` directory
+      as you would normally: using <link/> tags.
+      
+    -->
+    <link rel="stylesheet" href="/styles/ammap.css" type="text/css">        
+    <link rel="stylesheet" href="/styles/default.css" type="text/css">        
+    <link rel="stylesheet" href="/styles/jquery-ui-1.10.4.custom.min.css" type="text/css">        
+
+    <!--
+
+      Support for LESS included by default
+      ================================================
+
+      LESS files are automatically compiled when they change using the Gruntfile
+      located in the top-level of this Sails app.  If you run into issues with styles
+      not reloading, check the Sails log output in your console for LESS compilation errors.
+      If necessary, shut down and then lift your app again.
+      
+    -->
+
+  </head>
+
+  <body onclick="">
+
+<div id="browser">
+<div class="infowindow-header">
+<span>Prohlížeč</span>
+<span id="brclose" onclick="javascript: $('#browser').hide()">×</span>
+<div class"clearfix"></div>
+</div>
+<div class="infowindow">
+<iframe id="webframe" width="1024" height="768">
+  <p>Your browser does not support iframes.</p>
+</iframe>
+</div>
+</div>
+    <!-- Include the view file for the current controller/route -->
+    <div id="mapdiv" style="width: 1600px; background-color:#EEEEEE; height: 1000px; z-index:-1;" ></div>
+<div>
+  </ul>
+</div>
+
+
+    <!--
+
+      Client-side Javascript
+      ========================
+
+      You can import any js files in your `assets` directory as you would 
+      normally: using <script></script> tags.
+
+      Here's an example of importing a few dependencies, in order:
+    -->
+    <!-- Load jQuery -->
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <!-- Load jQueryUI -->
+    <script type="text/javascript" src="/js/jquery-ui-1.10.4.custom.min.js"></script>
+    <!-- Bring in the socket.io client -->
+    <script type="text/javascript" src="/js/socket.io.js"></script>
+    <!-- then beef it up with some convenience logic for talking to Sails.js -->
+    <script type="text/javascript" src="/js/sails.io.js"></script>
+    <!-- listen on socket.io for incoming messages -->
+    <script type="text/javascript" src="/js/app.js"></script>
+
+    <!-- Load ammap javascript libraries -->
+    <script type="text/javascript" src="/js/ammap.js"></script>
+    <script type="text/javascript" src="/maps/js/czechRepublicHigh.js"></script>
+
+    <!-- Your scripts here? -->
+    <!-- Your scripts here? -->
+    <!-- Your scripts here? -->
+
+<script type="text/javascript">
+
+
+/*
+$(document).click(function() {
+    if($('#browser').is(':visible') === true) { $('#browser').hide() }
+});
+*/
+                
+                var minipivovarSVG = "M9,0C4.029,0,0,4.029,0,9s4.029,9,9,9s9-4.029,9-9S13.971,0,9,0z M9,15.93 c-3.83,0-6.93-3.1-6.93-6.93S5.17,2.07,9,2.07s6.93,3.1,6.93,6.93S12.83,15.93,9,15.93 M12.5,9c0,1.933-1.567,3.5-3.5,3.5S5.5,10.933,5.5,9S7.067,5.5,9,5.5 S12.5,7.067,12.5,9z";
+	    
+		var map;
+		
+		AmCharts.ready(function() {
+		    map = new AmCharts.AmMap();
+		    map.pathToImages = "/images/";
+                    // legenda 
+                    var legend = new AmCharts.AmLegend();
+                    legend.data = [{title:"Průmyslové pivovary/Industrial Breweries", color:"#CC0000"}, {title:"Minipivovary/Microbreweries", color:"#00CC00"}, {title:"Vybraná města", color:"#000000"}]
+                    legend.left = 400;
+                    legend.bottom = 5;
+                    map.addLegend(legend);
+		    //map.panEventsEnabled = true; // this line enables pinch-zooming and dragging on touch devices
+		    
+                    //map.addLabel('1000px','1000px', 'test test test', 'center', '10px', '#000000'),
+                    map.addTitle('Mapa pivovarů a minipivovarů v ČR', '#000000', true, true);
+		    map.balloon.color = "#000000";
+                    
+		
+		    var dataProvider = {
+			mapVar: AmCharts.maps.czechRepublicHigh,
+			getAreasFromMap:true,
+                        svgPath: minipivovarSVG,
+                        images:[
+		    <% _.each(pivovary, function (pivovar) { %>
+                        {latitude:"<%= pivovar.Sirka2 %>", longitude:"<%= pivovar.Delka2 %>", type:"circle", color:"#6c00ff", title:"<%=  pivovar.Pivovar %>", url: "#test", description:"<strong>Kraj:</strong> <%=  pivovar.Kraj %><br /><strong>Město:</strong> <%=  pivovar.Mesto %><br /><strong>Adresa:</strong> <%=  pivovar.Adresa %><br /><strong>GPS:</strong> <%= pivovar.Sirka %> <%= pivovar.Delka %> <br /><strong>Status:</strong> <%=  pivovar.Status %><br /><strong>Založen:</strong> <%=  pivovar.Zalozen %><br /><strong>WWW:</strong> <a id=\"brlink\" onclick=\"javascript:$('#browser').show();$('#webframe').attr('src', 'http://<%=  pivovar.Web %>')\"><%=  pivovar.Web %></a>"},
+		    <% }) %> ]
+		    };
+		
+		    map.dataProvider = dataProvider;
+		
+		    map.areasSettings = {
+			autoZoom: true,
+			selectedColor: "#CC0000" // cervena
+		    };
+		
+		    map.smallMap = new AmCharts.SmallMap();
+		
+		    map.write("mapdiv");
+		
+		});
+    
+		$(function() {
+                        $("#browser").draggable().resizable({ containment: "parent" });
+		});
+
+</script>
+
+    <!--
+
+      Looking for client-side CoffeeScript or TypeScript?
+      ================================================
+
+      CoffeeScript and TypeScript precompilation are not installed by default,
+      but if you'd like to mix those features in, it is straightforward to
+      `npm install` the relevant grunt community modules and modify your Gruntfile
+      to use them.
+
+    -->
+
+
+
+    <!--
+
+      Another way: The Asset Linker
+      ========================
+
+      Sails supports a Grunt-based asset linker, to automatically inject 
+      <link> and <script> tags, as well any client-side templates you're using
+      into your HTML layouts and views, respecting dependencies.
+
+      You created this Sails app with the asset linker disabled.
+      If you change your mind, check out the docs on the subject:
+      http://sailsjs.org/#!documentation/asset-management
+
+    -->
+
+    </body>
+</html>
