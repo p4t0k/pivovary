@@ -116,6 +116,10 @@ $(document).click(function() {
 		    
                     map.addTitle('Mapa pivovarů a minipivovarů v ČR', '#000000', true, true);
 		    map.balloon.color = "#000000";
+
+                    // podekovani pividkam
+
+                    map.addLabel("1895", "1045", "Tato mapa vznikla za pomoci serveru www.pividky.cz", "right", "10", "#000000", "0");
 		
 		    var dataProvider = {
 			mapVar: AmCharts.maps.czechRepublicHigh,
